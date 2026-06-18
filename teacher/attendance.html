@@ -2,10 +2,14 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Attendance</title>
+<title>Teacher Attendance System</title>
 
 <style>
-body{margin:0;font-family:Segoe UI;background:#eef2ff;}
+body{
+  margin:0;
+  font-family:Segoe UI;
+  background:#eef2ff;
+}
 
 .header{
   background:#1e2a78;
@@ -13,12 +17,54 @@ body{margin:0;font-family:Segoe UI;background:#eef2ff;}
   padding:20px;
 }
 
-.container{padding:20px;}
+.topbar{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  padding:15px;
+  background:white;
+  margin:15px;
+  border-radius:10px;
+  box-shadow:0 5px 15px rgba(0,0,0,0.1);
+}
+
+select, input{
+  padding:8px;
+  border-radius:8px;
+  border:1px solid #ddd;
+}
+
+.add-box{
+  background:white;
+  padding:15px;
+  margin:15px;
+  border-radius:10px;
+  box-shadow:0 5px 15px rgba(0,0,0,0.1);
+}
+
+button{
+  padding:8px 12px;
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
+  margin:5px;
+}
+
+.btn{
+  background:green;
+  color:white;
+}
+
+.delete{
+  background:red;
+  color:white;
+}
 
 table{
   width:100%;
   border-collapse:collapse;
   background:white;
+  margin:15px;
   border-radius:10px;
   overflow:hidden;
 }
@@ -26,59 +72,330 @@ table{
 th{
   background:#111827;
   color:white;
-  padding:12px;
+  padding:10px;
 }
 
 td{
-  padding:12px;
+  padding:10px;
   text-align:center;
   border-bottom:1px solid #eee;
 }
 
-.btn{
-  margin-top:15px;
-  padding:10px 15px;
-  border:none;
-  border-radius:8px;
-  background:green;
-  color:white;
-  cursor:pointer;
+.history{
+  background:white;
+  margin:15px;
+  padding:15px;
+  border-radius:10px;
+  box-shadow:0 5px 15px rgba(0,0,0,0.1);
 }
 </style>
+
 </head>
 
 <body>
 
 <div class="header">
-<h2>Mark Attendance</h2>
+<h2>👨‍🏫 Teacher Attendance System</h2>
 </div>
 
-<div class="container">
+<!-- TOPBAR -->
+<div class="topbar">
 
-<table>
-<tr>
-<th>Student</th>
-<th>Present</th>
-<th>Absent</th>
-</tr>
+  <select id="classSelect" onchange="loadClassStudents()">
+    <option value="P1">P1</option>
+    <option value="P2">P2</option>
+    <option value="P3">P3</option>
+    <option value="P4">P4</option>
+    <option value="P5">P5</option>
+    <option value="P6">P6</option>
+    <option value="S1">S1</option>
+    <option value="S2">S2</option>
+    <option value="S3">S3</option>
+    <option value="S4">S4</option>
+    <option value="S5">S5</option>
+    <option value="S6">S6</option>
+  </select>
 
-<tr>
-<td>John Doe</td>
-<td><input type="radio" name="s1"></td>
-<td><input type="radio" name="s1"></td>
-</tr>
-
-<tr>
-<td>Mary Jane</td>
-<td><input type="radio" name="s2"></td>
-<td><input type="radio" name="s2"></td>
-</tr>
-
-</table>
-
-<button class="btn">Save Attendance</button>
+  <input type="text" id="subject" placeholder="Subject (e.g Math)">
+  <input type="text" id="search" placeholder="Search student..." onkeyup="searchStudent()">
 
 </div>
+
+<!-- ADD STUDENT -->
+<div class="add-box">
+<h3>➕ Add Student</h3>
+
+<input type="text" id="studentName" placeholder="Student name">
+<button class="btn" onclick="addStudent()">Add</button>
+</div>
+
+<!-- STUDENTS TABLE -->
+<table id="studentTable"></table>
+
+<button class="btn" onclick="saveAttendance()">💾 Save Attendance</button>
+
+<!-- WEEK SUMMARY -->
+<div class="history">
+<h3>📊 Weekly Summary</h3>
+<table id="weekTable"></table>
+</div>
+
+<!-- HISTORY -->
+<div class="history">
+<h3>📊 Attendance History</h3>
+<table id="historyTable"></table>
+</div>
+
+<script>
+
+/* ================= CLASS DATA ================= */
+const classStudents = {
+  P1:["Emmanuel Niyonsenga","Aline Uwase","Eric Hakizimana","Diane Nyiransabimana","Jean Bosco Mugabo","Josiane Mukamana","Patrick Nsengimana","Claudine Uwamahoro","Daniel Habimana","Beatrice Nyiraneza","Alain Gashumba","Sandrine Umutoni","Kevin Ishimwe","Chantal Nyirabashitsi","Fabrice Ndayisaba","Grace Mukandayisenga","Olivier Bizimana","Alice Uwimana","Samuel Ntakirutimana","Vestine Nyirahabimana","Jean Paul Rukundo","Yvonne Umutesi","David Mugenzi","Ange Uwitonze","Pascal Nshimiyimana","Rebecca Mukarwego","Elie Niyigena","Florence Nyiranziza","Eric Mbarushimana","Carine Mukarugira"],
+P2:["Emmanuel Niyonsenga","Aline Uwase","Eric Hakizimana","Diane Nyiransabimana","Jean Bosco Mugabo","Josiane Mukamana","Patrick Nsengimana","Claudine Uwamahoro","Daniel Habimana","Beatrice Nyiraneza","Alain Gashumba","Sandrine Umutoni","Kevin Ishimwe","Chantal Nyirabashitsi","Fabrice Ndayisaba","Grace Mukandayisenga","Olivier Bizimana","Alice Uwimana","Samuel Ntakirutimana","Vestine Nyirahabimana","Jean Paul Rukundo","Yvonne Umutesi","David Mugenzi","Ange Uwitonze","Pascal Nshimiyimana","Rebecca Mukarwego","Elie Niyigena","Florence Nyiranziza","Eric Mbarushimana","Carine Mukarugira"],
+P3:["Emmanuel Niyonsenga","Aline Uwase","Eric Hakizimana","Diane Nyiransabimana","Jean Bosco Mugabo","Josiane Mukamana","Patrick Nsengimana","Claudine Uwamahoro","Daniel Habimana","Beatrice Nyiraneza","Alain Gashumba","Sandrine Umutoni","Kevin Ishimwe","Chantal Nyirabashitsi","Fabrice Ndayisaba","Grace Mukandayisenga","Olivier Bizimana","Alice Uwimana","Samuel Ntakirutimana","Vestine Nyirahabimana","Jean Paul Rukundo","Yvonne Umutesi","David Mugenzi","Ange Uwitonze","Pascal Nshimiyimana","Rebecca Mukarwego","Elie Niyigena","Florence Nyiranziza","Eric Mbarushimana","Carine Mukarugira"],
+P4:["Emmanuel Niyonsenga","Aline Uwase","Eric Hakizimana","Diane Nyiransabimana","Jean Bosco Mugabo","Josiane Mukamana","Patrick Nsengimana","Claudine Uwamahoro","Daniel Habimana","Beatrice Nyiraneza","Alain Gashumba","Sandrine Umutoni","Kevin Ishimwe","Chantal Nyirabashitsi","Fabrice Ndayisaba","Grace Mukandayisenga","Olivier Bizimana","Alice Uwimana","Samuel Ntakirutimana","Vestine Nyirahabimana","Jean Paul Rukundo","Yvonne Umutesi","David Mugenzi","Ange Uwitonze","Pascal Nshimiyimana","Rebecca Mukarwego","Elie Niyigena","Florence Nyiranziza","Eric Mbarushimana","Carine Mukarugira"],
+P5:["Emmanuel Niyonsenga","Aline Uwase","Eric Hakizimana","Diane Nyiransabimana","Jean Bosco Mugabo","Josiane Mukamana","Patrick Nsengimana","Claudine Uwamahoro","Daniel Habimana","Beatrice Nyiraneza","Alain Gashumba","Sandrine Umutoni","Kevin Ishimwe","Chantal Nyirabashitsi","Fabrice Ndayisaba","Grace Mukandayisenga","Olivier Bizimana","Alice Uwimana","Samuel Ntakirutimana","Vestine Nyirahabimana","Jean Paul Rukundo","Yvonne Umutesi","David Mugenzi","Ange Uwitonze","Pascal Nshimiyimana","Rebecca Mukarwego","Elie Niyigena","Florence Nyiranziza","Eric Mbarushimana","Carine Mukarugira"],
+P6:["Emmanuel Niyonsenga","Aline Uwase","Eric Hakizimana","Diane Nyiransabimana","Jean Bosco Mugabo","Josiane Mukamana","Patrick Nsengimana","Claudine Uwamahoro","Daniel Habimana","Beatrice Nyiraneza","Alain Gashumba","Sandrine Umutoni","Kevin Ishimwe","Chantal Nyirabashitsi","Fabrice Ndayisaba","Grace Mukandayisenga","Olivier Bizimana","Alice Uwimana","Samuel Ntakirutimana","Vestine Nyirahabimana","Jean Paul Rukundo","Yvonne Umutesi","David Mugenzi","Ange Uwitonze","Pascal Nshimiyimana","Rebecca Mukarwego","Elie Niyigena","Florence Nyiranziza","Eric Mbarushimana","Carine Mukarugira"],
+S3:["Emmanuel Niyonsenga","Aline Uwase","Eric Hakizimana","Diane Nyiransabimana","Jean Bosco Mugabo","Josiane Mukamana","Patrick Nsengimana","Claudine Uwamahoro","Daniel Habimana","Beatrice Nyiraneza","Alain Gashumba","Sandrine Umutoni","Kevin Ishimwe","Chantal Nyirabashitsi","Fabrice Ndayisaba","Grace Mukandayisenga","Olivier Bizimana","Alice Uwimana","Samuel Ntakirutimana","Vestine Nyirahabimana","Jean Paul Rukundo","Yvonne Umutesi","David Mugenzi","Ange Uwitonze","Pascal Nshimiyimana","Rebecca Mukarwego","Elie Niyigena","Florence Nyiranziza","Eric Mbarushimana","Carine Mukarugira"],
+S4:["Emmanuel Niyonsenga","Aline Uwase","Eric Hakizimana","Diane Nyiransabimana","Jean Bosco Mugabo","Josiane Mukamana","Patrick Nsengimana","Claudine Uwamahoro","Daniel Habimana","Beatrice Nyiraneza","Alain Gashumba","Sandrine Umutoni","Kevin Ishimwe","Chantal Nyirabashitsi","Fabrice Ndayisaba","Grace Mukandayisenga","Olivier Bizimana","Alice Uwimana","Samuel Ntakirutimana","Vestine Nyirahabimana","Jean Paul Rukundo","Yvonne Umutesi","David Mugenzi","Ange Uwitonze","Pascal Nshimiyimana","Rebecca Mukarwego","Elie Niyigena","Florence Nyiranziza","Eric Mbarushimana","Carine Mukarugira"],
+S5:["Emmanuel Niyonsenga","Aline Uwase","Eric Hakizimana","Diane Nyiransabimana","Jean Bosco Mugabo","Josiane Mukamana","Patrick Nsengimana","Claudine Uwamahoro","Daniel Habimana","Beatrice Nyiraneza","Alain Gashumba","Sandrine Umutoni","Kevin Ishimwe","Chantal Nyirabashitsi","Fabrice Ndayisaba","Grace Mukandayisenga","Olivier Bizimana","Alice Uwimana","Samuel Ntakirutimana","Vestine Nyirahabimana","Jean Paul Rukundo","Yvonne Umutesi","David Mugenzi","Ange Uwitonze","Pascal Nshimiyimana","Rebecca Mukarwego","Elie Niyigena","Florence Nyiranziza","Eric Mbarushimana","Carine Mukarugira"],
+S6:["Emmanuel Niyonsenga","Aline Uwase","Eric Hakizimana","Diane Nyiransabimana","Jean Bosco Mugabo","Josiane Mukamana","Patrick Nsengimana","Claudine Uwamahoro","Daniel Habimana","Beatrice Nyiraneza","Alain Gashumba","Sandrine Umutoni","Kevin Ishimwe","Chantal Nyirabashitsi","Fabrice Ndayisaba","Grace Mukandayisenga","Olivier Bizimana","Alice Uwimana","Samuel Ntakirutimana","Vestine Nyirahabimana","Jean Paul Rukundo","Yvonne Umutesi","David Mugenzi","Ange Uwitonze","Pascal Nshimiyimana","Rebecca Mukarwego","Elie Niyigena","Florence Nyiranziza","Eric Mbarushimana","Carine Mukarugira"],
+
+  S1:["Eric Habimana","Diane Uwase","Jean Claude Niyonsenga","Aline Mukamana","Patrick Mugisha","Sandrine Nyirahabimana","Emmanuel Nshimiyimana","Claudette Uwamahoro","Fabrice Bizimana","Grace Nyirandekwe","Olivier Gashumba","Alice Uwimana","Samuel Ntakirutimana","Beatrice Mukandayisenga","David Niyibizi","Chantal Nyirankundwa","Kevin Ishimwe","Josiane Mukamurenzi","Jean Paul Rukundo","Vestine Nyirahabimana","Eric Mbarushimana","Yvonne Umutesi","Pascal Nshimiyimana","Rebecca Mukarwego","Elie Niyigena","Florence Nyiranziza","Alain Ndayisaba","Carine Mukarugira","Daniel Habimana","Ange Uwitonze"],
+
+  S2:["Jean Bosco","Aline Uwimana","Eric Bizimana","Diane Mukarugira","Patrick Niyonsenga","Sandrine Uwase","Emmanuel Habimana","Claudette Mukandayisenga","Fabrice Niyigena","Grace Mukamurenzi","Olivier Nshimiyimana","Alice Nyirabasha","Samuel Mbarushimana","Beatrice Mukarubega","David Gashumba","Chantal Niyonzima","Kevin Mukiza","Josiane Nyirandahimana","Jean Paul Bizimana","Vestine Uwitonze","Eric Niyibizi","Yvonne Mukandayisenga","Pascal Habinshuti","Rebecca Nyiranziza","Elie Mukarugira","Florence Niyomwungeri","Alain Rukundo","Carine Mukamurezi","Daniel Niyonzima","Ange Mukarubega"]
+};
+
+/* ================= VARIABLES ================= */
+let students = [];
+let currentDay = localStorage.getItem("currentDay")
+  ? parseInt(localStorage.getItem("currentDay"))
+  : 1;
+
+/* ================= LOAD CLASS ================= */
+function loadClassStudents(){
+  let cls = document.getElementById("classSelect").value;
+  students = classStudents[cls] || [];
+  renderStudents();
+}
+
+/* ================= RENDER STUDENTS ================= */
+function renderStudents(){
+
+  let table = document.getElementById("studentTable");
+
+  table.innerHTML = `
+    <tr>
+      <th>Student</th>
+      <th>Present</th>
+      <th>Absent</th>
+      <th>Action</th>
+    </tr>
+  `;
+
+  students.forEach((s,i)=>{
+    table.innerHTML += `
+      <tr>
+        <td>${s}</td>
+
+        <!-- PRESENT BOX -->
+        <td>
+          <div onclick="markPresent(${i})"
+               id="present-${i}"
+               style="width:30px;height:30px;border:2px solid #22c55e;
+                      display:flex;align-items:center;justify-content:center;
+                      cursor:pointer;border-radius:6px;font-weight:bold;">
+          </div>
+        </td>
+
+        <!-- ABSENT BOX -->
+        <td>
+          <div onclick="markAbsent(${i})"
+               id="absent-${i}"
+               style="width:30px;height:30px;border:2px solid #ef4444;
+                      display:flex;align-items:center;justify-content:center;
+                      cursor:pointer;border-radius:6px;font-weight:bold;">
+          </div>
+        </td>
+
+        <td>
+          <button onclick="editStudent(${i})" style="background:#f59e0b;color:white;border:none;padding:6px 10px;border-radius:6px;">
+            ✏ Edit
+          </button>
+
+          <button onclick="deleteStudent(${i})" class="delete">
+            🗑 Delete
+          </button>
+        </td>
+      </tr>
+    `;
+  });
+}
+/* ================= SAVE ================= */
+
+
+/* ================= HISTORY ================= */
+function saveAttendance(){
+
+  let className = document.getElementById("classSelect").value;
+  let subject = document.getElementById("subject").value;
+  let date = new Date().toLocaleString();
+
+  let history = JSON.parse(localStorage.getItem("attendanceHistory")) || [];
+
+  students.forEach((s,i)=>{
+
+    let status = attendanceState[i] || "Not Marked";
+
+    history.push({
+      student: s,
+      status: status,
+      className: className,
+      subject: subject,
+      date: date,
+      day: "Day " + currentDay
+    });
+  });
+
+  localStorage.setItem("attendanceHistory", JSON.stringify(history));
+
+  currentDay++;
+  localStorage.setItem("currentDay", currentDay);
+
+  attendanceState = {}; // reset
+
+  renderHistory();
+}
+/* ================= WEEK SUMMARY ================= */
+function generateWeeklySummary(){
+
+  let history = JSON.parse(localStorage.getItem("attendanceHistory")) || [];
+
+  let summary = {};
+
+  history.forEach(h=>{
+    if(!summary[h.student]){
+      summary[h.student] = {p:0,a:0};
+    }
+
+    if(h.status === "Present") summary[h.student].p++;
+    else if(h.status === "Absent") summary[h.student].a++;
+  });
+
+  let table = document.getElementById("weekTable");
+
+  table.innerHTML = `
+    <tr>
+      <th>Student</th>
+      <th>Present</th>
+      <th>Absent</th>
+      <th>%</th>
+    </tr>
+  `;
+
+  for(let s in summary){
+
+    let p = summary[s].p;
+    let a = summary[s].a;
+    let total = p + a;
+    let percent = total ? Math.round((p/total)*100) : 0;
+
+    table.innerHTML += `
+      <tr>
+        <td>${s}</td>
+        <td>${p}</td>
+        <td>${a}</td>
+        <td>${percent}%</td>
+      </tr>
+    `;
+  }
+}
+function renderStudents(){
+
+  let table = document.getElementById("studentTable");
+
+  table.innerHTML = `
+    <tr>
+      <th>Student</th>
+      <th>Present</th>
+      <th>Absent</th>
+      <th>Action</th>
+    </tr>
+  `;
+
+  students.forEach((s,i)=>{
+
+    table.innerHTML += `
+      <tr>
+        <td>${s}</td>
+
+        <td>
+          <div onclick="markPresent(${i})"
+               id="present-${i}"
+               style="width:35px;height:35px;border:2px solid #22c55e;
+               display:flex;align-items:center;justify-content:center;
+               cursor:pointer;border-radius:8px;font-size:20px;font-weight:bold;">
+          </div>
+        </td>
+
+        <td>
+          <div onclick="markAbsent(${i})"
+               id="absent-${i}"
+               style="width:35px;height:35px;border:2px solid #ef4444;
+               display:flex;align-items:center;justify-content:center;
+               cursor:pointer;border-radius:8px;font-size:20px;font-weight:bold;">
+          </div>
+        </td>
+
+        <td>
+          <button onclick="deleteStudent(${i})" class="delete">🗑 Delete</button>
+        </td>
+      </tr>
+    `;
+  });
+}
+// load saved students (optional improvement)
+function getStoredStudents(cls){
+  return JSON.parse(localStorage.getItem("students_" + cls)) || classStudents[cls] || [];
+}
+
+// SAVE STUDENTS INTO LOCAL STORAGE
+function saveStudentsToStorage(){
+  let cls = document.getElementById("classSelect").value;
+  localStorage.setItem("students_" + cls, JSON.stringify(students));
+}
+
+// ADD STUDENT FUNCTION
+function addStudent(){
+  let name = document.getElementById("studentName").value;
+
+  if(name.trim() === ""){
+    alert("Enter student name");
+    return;
+  }
+
+  students.push(name);
+  saveStudentsToStorage();
+  renderStudents();
+
+  document.getElementById("studentName").value = "";
+}
+function markPresent(i){
+
+  document.getElementById(`present-${i}`).innerHTML = "✔";
+  document.getElementById(`absent-${i}`).innerHTML = "";
+}
+function markAbsent(i){
+
+  document.getElementById(`absent-${i}`).innerHTML = "✖";
+  document.getElementById(`present-${i}`).innerHTML = "";
+}
+/* ================= INIT ================= */
+loadClassStudents();
+renderHistory();
+generateWeeklySummary();
+
+</script>
 
 </body>
 </html>
