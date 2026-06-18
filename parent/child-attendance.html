@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Child Attendance</title>
+
+<style>
+body{
+  margin:0;
+  font-family:Segoe UI;
+  background:#fef3c7;
+}
+
+.header{
+  background:#f59e0b;
+  color:white;
+  padding:20px;
+}
+
+.container{padding:20px;}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+  background:white;
+  border-radius:10px;
+  overflow:hidden;
+}
+
+th{
+  background:#111827;
+  color:white;
+  padding:12px;
+}
+
+td{
+  padding:12px;
+  text-align:center;
+  border-bottom:1px solid #eee;
+}
+
+.status-present{color:green;font-weight:bold;}
+.status-absent{color:red;font-weight:bold;}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+<h2>Child Attendance</h2>
+</div>
+
+<div class="container">
+
+<table>
+<tr>
+<th>Date</th>
+<th>Status</th>
+<th>Note</th>
+</tr>
+
+<tr>
+<td>18 June</td>
+<td class="status-present">Present</td>
+<td>On time</td>
+</tr>
+
+<tr>
+<td>17 June</td>
+<td class="status-absent">Absent</td>
+<td>Sick leave</td>
+</tr>
+
+<tr>
+<td>16 June</td>
+<td class="status-present">Present</td>
+<td>Good</td>
+</tr>
+
+</table>
+
+</div>
+
+</body>
+</html>
