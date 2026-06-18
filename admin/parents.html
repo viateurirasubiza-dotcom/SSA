@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Parents | Admin</title>
+
+<style>
+body{margin:0;font-family:Segoe UI;background:#fff7ed;}
+
+.header{
+  background:linear-gradient(90deg,#f97316,#fb923c);
+  color:white;
+  padding:20px;
+  display:flex;
+  justify-content:space-between;
+}
+
+.btn{
+  padding:10px 14px;
+  border:none;
+  border-radius:8px;
+  color:white;
+  cursor:pointer;
+}
+
+.add{background:#10b981;}
+
+.container{padding:25px;}
+
+.card{
+  background:white;
+  padding:15px;
+  border-radius:12px;
+  margin-bottom:15px;
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+  background:white;
+  border-radius:12px;
+  overflow:hidden;
+}
+
+th{
+  background:#fb923c;
+  color:white;
+  padding:12px;
+}
+
+td{
+  padding:12px;
+  border-bottom:1px solid #eee;
+  text-align:center;
+}
+
+tr:hover{background:#fff3e0;}
+
+.action{
+  padding:6px 10px;
+  border:none;
+  border-radius:6px;
+  cursor:pointer;
+}
+
+.edit{background:#3b82f6;color:white;}
+.delete{background:#ef4444;color:white;}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+  <h2>👪 Parents Management</h2>
+  <button class="btn add">+ Add Parent</button>
+</div>
+
+<div class="container">
+
+<div class="card">
+Total Parents: <b>1100</b>
+</div>
+
+<table>
+<tr>
+<th>Name</th>
+<th>Child</th>
+<th>Phone</th>
+<th>Action</th>
+</tr>
+
+<tr>
+<td>Mr Paul</td>
+<td>John Doe</td>
+<td>0788***</td>
+<td>
+<button class="action edit">Edit</button>
+<button class="action delete">Delete</button>
+</td>
+</tr>
+
+</table>
+
+</div>
+
+</body>
+</html>
