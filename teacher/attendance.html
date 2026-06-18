@@ -475,6 +475,26 @@ function clearAllHistory(){
     alert("All history cleared ✔");
   }
 }
+  function deleteStudent(i){
+  let cls = document.getElementById("classSelect").value;
+
+  if(confirm("Urifuza gusiba uyu munyeshuri?")){
+
+    // remove student from array
+    students.splice(i, 1);
+
+    // save updated list
+    localStorage.setItem("students_" + cls, JSON.stringify(students));
+
+    // remove attendance state
+    delete attendanceState[i];
+
+    // re-render table
+    renderStudents();
+
+    alert("Umunyeshuri yasibwe ✔");
+  }
+}
 </script>
 
 </body>
