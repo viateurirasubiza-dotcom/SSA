@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Admin Dashboard</title>
+
+<style>
+/* ================= GLOBAL ================= */
+body{
+  margin:0;
+  font-family:"Segoe UI", sans-serif;
+  background:#f4f6fb;
+  display:flex;
+}
+
+/* ================= SIDEBAR ================= */
+.sidebar{
+  width:240px;
+  height:100vh;
+  background:#111827;
+  color:white;
+  padding:20px;
+  position:fixed;
+}
+
+.sidebar h2{
+  text-align:center;
+  margin-bottom:30px;
+}
+
+.sidebar a{
+  display:block;
+  color:white;
+  text-decoration:none;
+  padding:12px;
+  margin:5px 0;
+  border-radius:8px;
+  transition:0.3s;
+}
+
+.sidebar a:hover{
+  background:#2563eb;
+  padding-left:18px;
+}
+
+/* ================= MAIN ================= */
+.main{
+  margin-left:260px;
+  padding:20px;
+  width:100%;
+}
+
+/* ================= HEADER ================= */
+.header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.header h1{
+  margin:0;
+}
+
+.header button{
+  padding:10px 15px;
+  border:none;
+  background:#2563eb;
+  color:white;
+  border-radius:8px;
+  cursor:pointer;
+}
+
+/* ================= CARDS ================= */
+.cards{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:15px;
+  margin-top:20px;
+}
+
+.card{
+  background:white;
+  padding:20px;
+  border-radius:15px;
+  box-shadow:0 5px 15px rgba(0,0,0,0.1);
+  transition:0.3s;
+}
+
+.card:hover{
+  transform:translateY(-5px);
+}
+
+.card h3{
+  margin:0;
+  color:#6b7280;
+}
+
+.card h1{
+  margin:10px 0 0 0;
+}
+
+/* ================= SECTIONS ================= */
+.section{
+  margin-top:30px;
+  background:white;
+  padding:20px;
+  border-radius:15px;
+  box-shadow:0 5px 15px rgba(0,0,0,0.1);
+}
+
+/* ================= QUICK ACTIONS ================= */
+.actions button{
+  padding:10px;
+  margin:5px;
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
+  background:#10b981;
+  color:white;
+}
+
+/* ================= DARK MODE ================= */
+.dark{
+  background:#0f172a;
+  color:white;
+}
+
+.dark .card,
+.dark .section{
+  background:#1e293b;
+  color:white;
+}
+
+.dark .sidebar{
+  background:#000;
+}
+</style>
+
+</head>
+
+<body>
+
+<!-- SIDEBAR -->
+<div class="sidebar">
+  <h2>ADMIN</h2>
+
+  <a href="#">Dashboard</a>
+  <a href="students.html">Students</a>
+  <a href="teachers.html">Teachers</a>
+  <a href="parents.html">Parents</a>
+  <a href="reports.html">Reports</a>
+  <a href="settings.html">Settings</a>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- HEADER -->
+  <div class="header">
+    <h1>Admin Dashboard</h1>
+    <button onclick="toggleDark()">🌙 Dark Mode</button>
+  </div>
+
+  <!-- STATS -->
+  <div class="cards">
+
+    <div class="card">
+      <h3>Students</h3>
+      <h1>1200</h1>
+    </div>
+
+    <div class="card">
+      <h3>Teachers</h3>
+      <h1>45</h1>
+    </div>
+
+    <div class="card">
+      <h3>Parents</h3>
+      <h1>1100</h1>
+    </div>
+
+  </div>
+
+  <!-- QUICK ACTIONS -->
+  <div class="section">
+    <h2>⚡ Quick Actions</h2>
+
+    <div class="actions">
+      <button>Add Student</button>
+      <button>Add Teacher</button>
+      <button>Generate Report</button>
+      <button>Send Notification</button>
+    </div>
+  </div>
+
+  <!-- CHART SECTION (UI PLACEHOLDER) -->
+  <div class="section">
+    <h2>📊 Attendance Analytics</h2>
+    <p>Chart area (will be connected to real data later)</p>
+  </div>
+
+</div>
+
+<script>
+function toggleDark(){
+  document.body.classList.toggle("dark");
+}
+</script>
+
+</body>
+</html>
