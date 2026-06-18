@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Students | Admin</title>
+
+<style>
+body{
+  margin:0;
+  font-family:Segoe UI;
+  background:#f4f6fb;
+}
+
+/* HEADER */
+.header{
+  background:linear-gradient(90deg,#2563eb,#1e40af);
+  color:white;
+  padding:20px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.header h2{margin:0;}
+
+.btn{
+  padding:10px 14px;
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
+  color:white;
+  font-weight:500;
+}
+
+.btn-add{background:#10b981;}
+.btn-add:hover{opacity:0.9}
+
+/* CONTAINER */
+.container{
+  padding:25px;
+}
+
+/* CARD */
+.card{
+  background:white;
+  padding:15px;
+  border-radius:12px;
+  box-shadow:0 10px 20px rgba(0,0,0,0.05);
+  margin-bottom:20px;
+}
+
+/* TABLE */
+table{
+  width:100%;
+  border-collapse:collapse;
+  overflow:hidden;
+  border-radius:12px;
+  background:white;
+  box-shadow:0 10px 20px rgba(0,0,0,0.05);
+}
+
+th{
+  background:#111827;
+  color:white;
+  padding:12px;
+}
+
+td{
+  padding:12px;
+  border-bottom:1px solid #eee;
+  text-align:center;
+}
+
+tr:hover{
+  background:#f1f5f9;
+}
+
+/* ACTION BUTTONS */
+.action{
+  padding:6px 10px;
+  border:none;
+  border-radius:6px;
+  cursor:pointer;
+}
+
+.edit{background:#f59e0b;color:white;}
+.delete{background:#ef4444;color:white;}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+  <h2>📘 Students Management</h2>
+  <button class="btn btn-add">+ Add Student</button>
+</div>
+
+<div class="container">
+
+<div class="card">
+<strong>Total Students:</strong> 1200
+</div>
+
+<table>
+<tr>
+<th>Name</th>
+<th>Class</th>
+<th>Gender</th>
+<th>Action</th>
+</tr>
+
+<tr>
+<td>John Doe</td>
+<td>S3</td>
+<td>Male</td>
+<td>
+<button class="action edit">Edit</button>
+<button class="action delete">Delete</button>
+</td>
+</tr>
+
+<tr>
+<td>Mary Jane</td>
+<td>S2</td>
+<td>Female</td>
+<td>
+<button class="action edit">Edit</button>
+<button class="action delete">Delete</button>
+</td>
+</tr>
+
+</table>
+
+</div>
+
+</body>
+</html>
