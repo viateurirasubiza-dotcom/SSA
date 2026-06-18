@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Login - Smart Attendance</title>
+
+<style>
+body{
+  margin:0;
+  font-family:"Segoe UI", sans-serif;
+  background: linear-gradient(135deg,#1e3c72,#2a5298);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+  transition:0.3s;
+}
+
+/* ================= LOGIN BOX ================= */
+.login-box{
+  background:white;
+  padding:30px;
+  width:350px;
+  border-radius:15px;
+  box-shadow:0 10px 25px rgba(0,0,0,0.2);
+  animation:fadeIn 0.8s ease;
+}
+
+h2{
+  text-align:center;
+  margin-bottom:20px;
+}
+
+/* ================= INPUTS ================= */
+input, select{
+  width:100%;
+  padding:12px;
+  margin:10px 0;
+  border:1px solid #ddd;
+  border-radius:8px;
+  outline:none;
+  transition:0.3s;
+}
+
+input:focus, select:focus{
+  border-color:#4facfe;
+  box-shadow:0 0 5px rgba(79,172,254,0.5);
+}
+
+/* ================= BUTTON ================= */
+button{
+  width:100%;
+  padding:12px;
+  border:none;
+  border-radius:8px;
+  background:#4facfe;
+  color:white;
+  cursor:pointer;
+  font-weight:bold;
+  transition:0.3s;
+}
+
+button:hover{
+  background:#0077ff;
+  transform:scale(1.03);
+}
+
+/* ================= FOOTER ================= */
+small{
+  display:block;
+  text-align:center;
+  margin-top:10px;
+  color:gray;
+}
+
+/* ================= DARK MODE ================= */
+.dark{
+  background:#0f172a;
+}
+
+.dark .login-box{
+  background:#1e293b;
+  color:white;
+}
+
+.dark input, .dark select{
+  background:#0f172a;
+  color:white;
+  border:1px solid #334155;
+}
+
+/* ================= ANIMATION ================= */
+@keyframes fadeIn{
+  from{opacity:0; transform:translateY(-20px);}
+  to{opacity:1; transform:translateY(0);}
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="login-box">
+
+  <h2>🔐 Login</h2>
+
+  <input id="username" type="text" placeholder="Enter username">
+  <input id="password" type="password" placeholder="Enter password">
+
+  <select id="role">
+    <option value="">Select Role</option>
+    <option value="admin">Admin</option>
+    <option value="teacher">Teacher</option>
+    <option value="parent">Parent</option>
+  </select>
+
+  <button onclick="login()">Login</button>
+
+  <button style="margin-top:10px;background:#111;" onclick="toggleDark()">🌙 Dark Mode</button>
+
+  <small>Smart Attendance System © 2026</small>
+
+</div>
+
+<script>
+
+/* ================= LOGIN LOGIC (DEMO) ================= */
+function login(){
+  let user = document.getElementById("username").value;
+  let pass = document.getElementById("password").value;
+  let role = document.getElementById("role").value;
+
+  if(user === "" || pass === "" || role === ""){
+    alert("Please fill all fields");
+    return;
+  }
+
+  // Fake redirect based on role
+  if(role === "admin"){
+    window.location.href = "admin/dashboard.html";
+  }
+
+  if(role === "teacher"){
+    window.location.href = "teacher/dashboard.html";
+  }
+
+  if(role === "parent"){
+    window.location.href = "parent/dashboard.html";
+  }
+}
+
+/* ================= DARK MODE ================= */
+function toggleDark(){
+  document.body.classList.toggle("dark");
+}
+</script>
+
+</body>
+</html>
