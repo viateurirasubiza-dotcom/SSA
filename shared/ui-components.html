@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>UI Components</title>
+
+<style>
+body{
+  font-family:Segoe UI;
+  background:#f4f6fb;
+  padding:20px;
+}
+
+.section{
+  margin-bottom:30px;
+}
+
+.title{
+  font-size:20px;
+  margin-bottom:10px;
+  font-weight:bold;
+}
+
+/* BUTTONS */
+.btn{
+  padding:10px 14px;
+  border:none;
+  border-radius:8px;
+  color:white;
+  margin:5px;
+}
+
+.primary{background:#2563eb;}
+.success{background:#10b981;}
+.warning{background:#f59e0b;}
+.danger{background:#ef4444;}
+
+/* CARDS */
+.card{
+  background:white;
+  padding:20px;
+  border-radius:12px;
+  box-shadow:0 5px 15px rgba(0,0,0,0.1);
+  width:200px;
+  display:inline-block;
+  margin:10px;
+}
+
+/* INPUTS */
+input, select{
+  padding:10px;
+  width:200px;
+  margin:5px;
+  border-radius:8px;
+  border:1px solid #ddd;
+}
+
+/* BADGES */
+.badge{
+  padding:5px 10px;
+  border-radius:6px;
+  color:white;
+  font-size:12px;
+}
+
+.blue{background:#2563eb;}
+.green{background:#10b981;}
+.red{background:#ef4444;}
+.orange{background:#f59e0b;}
+</style>
+
+</head>
+
+<body>
+
+<h1>🧩 UI COMPONENTS KIT</h1>
+
+<!-- BUTTONS -->
+<div class="section">
+<div class="title">Buttons</div>
+<button class="btn primary">Primary</button>
+<button class="btn success">Success</button>
+<button class="btn warning">Warning</button>
+<button class="btn danger">Danger</button>
+</div>
+
+<!-- CARDS -->
+<div class="section">
+<div class="title">Cards</div>
+
+<div class="card">Students<br><b>1200</b></div>
+<div class="card">Teachers<br><b>45</b></div>
+<div class="card">Parents<br><b>1100</b></div>
+</div>
+
+<!-- INPUTS -->
+<div class="section">
+<div class="title">Inputs</div>
+<input type="text" placeholder="Name">
+<input type="email" placeholder="Email">
+<select>
+<option>Select Role</option>
+<option>Admin</option>
+<option>Teacher</option>
+<option>Parent</option>
+</select>
+</div>
+
+<!-- BADGES -->
+<div class="section">
+<div class="title">Badges</div>
+<span class="badge blue">Info</span>
+<span class="badge green">Success</span>
+<span class="badge red">Error</span>
+<span class="badge orange">Warning</span>
+</div>
+
+</body>
+</html>
