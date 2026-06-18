@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Parent Dashboard</title>
+
+<style>
+/* ================= GLOBAL ================= */
+body{
+  margin:0;
+  font-family:"Segoe UI", sans-serif;
+  background:#fff7ed;
+  transition:0.3s;
+}
+
+/* ================= HEADER ================= */
+.header{
+  background:orange;
+  color:white;
+  padding:20px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.header button{
+  padding:10px 15px;
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
+  background:white;
+  color:orange;
+  font-weight:bold;
+}
+
+/* ================= CONTAINER ================= */
+.container{
+  padding:20px;
+}
+
+/* ================= CARDS ================= */
+.cards{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:15px;
+  margin-top:20px;
+}
+
+.card{
+  background:white;
+  padding:20px;
+  border-radius:15px;
+  box-shadow:0 5px 15px rgba(0,0,0,0.1);
+  transition:0.3s;
+}
+
+.card:hover{
+  transform:translateY(-5px);
+}
+
+.card h3{
+  margin:0;
+  color:#6b7280;
+}
+
+.card h1{
+  margin-top:10px;
+}
+
+/* ================= SECTION ================= */
+.section{
+  margin-top:30px;
+  background:white;
+  padding:20px;
+  border-radius:15px;
+  box-shadow:0 5px 15px rgba(0,0,0,0.1);
+}
+
+/* ================= TABLE ================= */
+table{
+  width:100%;
+  border-collapse:collapse;
+}
+
+th,td{
+  padding:12px;
+  border-bottom:1px solid #ddd;
+  text-align:center;
+}
+
+th{
+  background:orange;
+  color:white;
+}
+
+/* ================= NOTIFICATIONS ================= */
+.notification{
+  background:#fff3e0;
+  padding:10px;
+  border-left:5px solid orange;
+  margin:10px 0;
+  border-radius:8px;
+}
+
+/* ================= DARK MODE ================= */
+.dark{
+  background:#0f172a;
+  color:white;
+}
+
+.dark .card,
+.dark .section{
+  background:#1e293b;
+  color:white;
+}
+
+.dark table{
+  color:white;
+}
+
+.dark .notification{
+  background:#1e293b;
+  border-left:5px solid #f59e0b;
+}
+</style>
+
+</head>
+
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <h2>👪 Parent Dashboard</h2>
+  <button onclick="toggleDark()">🌙 Dark Mode</button>
+</div>
+
+<div class="container">
+
+  <!-- STATS -->
+  <div class="cards">
+
+    <div class="card">
+      <h3>Attendance Rate</h3>
+      <h1>92%</h1>
+    </div>
+
+    <div class="card">
+      <h3>Absent Days</h3>
+      <h1>3</h1>
+    </div>
+
+    <div class="card">
+      <h3>Late Days</h3>
+      <h1>2</h1>
+    </div>
+
+  </div>
+
+  <!-- NOTIFICATIONS -->
+  <div class="section">
+    <h2>🔔 Notifications</h2>
+
+    <div class="notification">
+      ✔ Your child attended all classes today
+    </div>
+
+    <div class="notification">
+      ⚠ Your child was absent yesterday
+    </div>
+
+    <div class="notification">
+      📢 Parent meeting scheduled tomorrow
+    </div>
+  </div>
+
+  <!-- ATTENDANCE HISTORY -->
+  <div class="section">
+    <h2>📅 Attendance History</h2>
+
+    <table>
+      <tr>
+        <th>Date</th>
+        <th>Status</th>
+      </tr>
+
+      <tr>
+        <td>18 June</td>
+        <td>Present</td>
+      </tr>
+
+      <tr>
+        <td>17 June</td>
+        <td>Absent</td>
+      </tr>
+
+      <tr>
+        <td>16 June</td>
+        <td>Present</td>
+      </tr>
+
+    </table>
+  </div>
+
+</div>
+
+<script>
+function toggleDark(){
+  document.body.classList.toggle("dark");
+}
+</script>
+
+</body>
+</html>
