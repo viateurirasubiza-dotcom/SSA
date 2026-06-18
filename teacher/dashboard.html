@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Teacher Dashboard</title>
+
+<style>
+/* ================= GLOBAL ================= */
+body{
+  margin:0;
+  font-family:"Segoe UI", sans-serif;
+  background:#f5f7ff;
+  display:flex;
+  transition:0.3s;
+}
+
+/* ================= SIDEBAR ================= */
+.sidebar{
+  width:240px;
+  height:100vh;
+  background:#1e2a78;
+  color:white;
+  padding:20px;
+  position:fixed;
+}
+
+.sidebar h2{
+  text-align:center;
+  margin-bottom:25px;
+}
+
+.sidebar a{
+  display:block;
+  color:white;
+  text-decoration:none;
+  padding:12px;
+  margin:6px 0;
+  border-radius:8px;
+  transition:0.3s;
+}
+
+.sidebar a:hover{
+  background:#4facfe;
+  padding-left:18px;
+}
+
+/* ================= MAIN ================= */
+.main{
+  margin-left:260px;
+  padding:20px;
+  width:100%;
+}
+
+/* ================= HEADER ================= */
+.header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.header h1{
+  margin:0;
+}
+
+.header button{
+  padding:10px 15px;
+  border:none;
+  background:#4facfe;
+  color:white;
+  border-radius:8px;
+  cursor:pointer;
+}
+
+/* ================= CARDS ================= */
+.cards{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:15px;
+  margin-top:20px;
+}
+
+.card{
+  background:white;
+  padding:20px;
+  border-radius:15px;
+  box-shadow:0 5px 15px rgba(0,0,0,0.1);
+  transition:0.3s;
+}
+
+.card:hover{
+  transform:translateY(-5px);
+}
+
+.card h3{
+  margin:0;
+  color:#6b7280;
+}
+
+.card h1{
+  margin-top:10px;
+}
+
+/* ================= SECTION ================= */
+.section{
+  margin-top:30px;
+  background:white;
+  padding:20px;
+  border-radius:15px;
+  box-shadow:0 5px 15px rgba(0,0,0,0.1);
+}
+
+/* ================= TABLE ================= */
+table{
+  width:100%;
+  border-collapse:collapse;
+}
+
+th,td{
+  padding:12px;
+  border-bottom:1px solid #ddd;
+  text-align:center;
+}
+
+th{
+  background:#1e2a78;
+  color:white;
+}
+
+/* ================= BUTTONS ================= */
+.btn{
+  padding:10px;
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
+  margin:5px;
+}
+
+.green{background:#10b981;color:white;}
+.blue{background:#2563eb;color:white;}
+.red{background:#ef4444;color:white;}
+
+/* ================= COMMENTS BOX ================= */
+textarea{
+  width:100%;
+  padding:10px;
+  border-radius:8px;
+  border:1px solid #ddd;
+}
+
+/* ================= DARK MODE ================= */
+.dark{
+  background:#0f172a;
+  color:white;
+}
+
+.dark .card,
+.dark .section{
+  background:#1e293b;
+  color:white;
+}
+
+.dark table{
+  color:white;
+}
+
+.dark .sidebar{
+  background:#000;
+}
+</style>
+
+</head>
+
+<body>
+
+<!-- SIDEBAR -->
+<div class="sidebar">
+  <h2>TEACHER</h2>
+
+  <a href="#">Dashboard</a>
+  <a href="attendance.html">Attendance</a>
+  <a href="students.html">Students</a>
+  <a href="comments.html">Comments</a>
+  <a href="reports.html">Reports</a>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- HEADER -->
+  <div class="header">
+    <h1>Teacher Dashboard</h1>
+    <button onclick="toggleDark()">🌙 Dark Mode</button>
+  </div>
+
+  <!-- STATS -->
+  <div class="cards">
+
+    <div class="card">
+      <h3>Total Students</h3>
+      <h1>320</h1>
+    </div>
+
+    <div class="card">
+      <h3>Present Today</h3>
+      <h1>290</h1>
+    </div>
+
+    <div class="card">
+      <h3>Absent Today</h3>
+      <h1>30</h1>
+    </div>
+
+  </div>
+
+  <!-- ATTENDANCE QUICK ACTION -->
+  <div class="section">
+    <h2>⚡ Attendance Actions</h2>
+
+    <button class="btn green">Mark Attendance</button>
+    <button class="btn blue">View Today</button>
+    <button class="btn red">Export Report</button>
+  </div>
+
+  <!-- STUDENTS TABLE -->
+  <div class="section">
+    <h2>👨‍🎓 Students List</h2>
+
+    <table>
+      <tr>
+        <th>Name</th>
+        <th>Class</th>
+        <th>Status</th>
+      </tr>
+
+      <tr>
+        <td>John Doe</td>
+        <td>Year 2</td>
+        <td>Present</td>
+      </tr>
+
+      <tr>
+        <td>Mary Jane</td>
+        <td>Year 2</td>
+        <td>Absent</td>
+      </tr>
+
+    </table>
+  </div>
+
+  <!-- COMMENTS -->
+  <div class="section">
+    <h2>💬 Add Comments</h2>
+
+    <textarea rows="4" placeholder="Write student feedback..."></textarea>
+    <br><br>
+    <button class="btn blue">Send Comment</button>
+  </div>
+
+</div>
+
+<script>
+function toggleDark(){
+  document.body.classList.toggle("dark");
+}
+</script>
+
+</body>
+</html>
