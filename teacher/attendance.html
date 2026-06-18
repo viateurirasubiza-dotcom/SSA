@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Attendance</title>
+
+<style>
+body{margin:0;font-family:Segoe UI;background:#eef2ff;}
+
+.header{
+  background:#1e2a78;
+  color:white;
+  padding:20px;
+}
+
+.container{padding:20px;}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+  background:white;
+  border-radius:10px;
+  overflow:hidden;
+}
+
+th{
+  background:#111827;
+  color:white;
+  padding:12px;
+}
+
+td{
+  padding:12px;
+  text-align:center;
+  border-bottom:1px solid #eee;
+}
+
+.btn{
+  margin-top:15px;
+  padding:10px 15px;
+  border:none;
+  border-radius:8px;
+  background:green;
+  color:white;
+  cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+<h2>Mark Attendance</h2>
+</div>
+
+<div class="container">
+
+<table>
+<tr>
+<th>Student</th>
+<th>Present</th>
+<th>Absent</th>
+</tr>
+
+<tr>
+<td>John Doe</td>
+<td><input type="radio" name="s1"></td>
+<td><input type="radio" name="s1"></td>
+</tr>
+
+<tr>
+<td>Mary Jane</td>
+<td><input type="radio" name="s2"></td>
+<td><input type="radio" name="s2"></td>
+</tr>
+
+</table>
+
+<button class="btn">Save Attendance</button>
+
+</div>
+
+</body>
+</html>
