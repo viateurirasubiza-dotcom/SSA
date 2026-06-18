@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Settings</title>
+
+<style>
+body{margin:0;font-family:Segoe UI;background:#e5e7eb;}
+
+.header{
+  background:#111827;
+  color:white;
+  padding:20px;
+}
+
+.container{padding:25px;}
+
+.card{
+  background:white;
+  padding:20px;
+  border-radius:12px;
+  margin-bottom:15px;
+}
+
+input{
+  width:100%;
+  padding:10px;
+  margin:8px 0;
+  border:1px solid #ddd;
+  border-radius:8px;
+}
+
+.btn{
+  padding:10px 14px;
+  border:none;
+  border-radius:8px;
+  background:#10b981;
+  color:white;
+  cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+<h2>⚙️ System Settings</h2>
+</div>
+
+<div class="container">
+
+<div class="card">
+<h3>Admin Password</h3>
+<input type="password" placeholder="Old Password">
+<input type="password" placeholder="New Password">
+<button class="btn">Update</button>
+</div>
+
+<div class="card">
+<h3>System Options</h3>
+<p>Enable notifications, email, SMS (UI only)</p>
+</div>
+
+</div>
+
+</body>
+</html>
