@@ -1,0 +1,135 @@
+/* ================= ROOT DESIGN SYSTEM ================= */
+:root{
+  --primary:#2563eb;
+  --secondary:#1e40af;
+  --success:#10b981;
+  --danger:#ef4444;
+  --warning:#f59e0b;
+  --dark:#0f172a;
+  --light:#f4f6fb;
+  --card:#ffffff;
+}
+
+/* ================= GLOBAL RESET ================= */
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Segoe UI, sans-serif;
+}
+
+body{
+  background:var(--light);
+  color:#111;
+}
+
+/* ================= CONTAINER ================= */
+.container{
+  padding:20px;
+}
+
+/* ================= CARD ================= */
+.card{
+  background:var(--card);
+  padding:20px;
+  border-radius:12px;
+  box-shadow:0 10px 20px rgba(0,0,0,0.05);
+  transition:0.3s;
+}
+
+.card:hover{
+  transform:translateY(-5px);
+}
+
+/* ================= BUTTONS ================= */
+.btn{
+  padding:10px 14px;
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
+  color:white;
+  transition:0.3s;
+}
+
+.btn-primary{background:var(--primary);}
+.btn-success{background:var(--success);}
+.btn-danger{background:var(--danger);}
+.btn-warning{background:var(--warning);}
+
+.btn:hover{
+  opacity:0.9;
+}
+
+/* ================= TABLE ================= */
+.table{
+  width:100%;
+  border-collapse:collapse;
+  background:white;
+  border-radius:12px;
+  overflow:hidden;
+}
+
+.table th{
+  background:var(--dark);
+  color:white;
+  padding:12px;
+}
+
+.table td{
+  padding:12px;
+  text-align:center;
+  border-bottom:1px solid #eee;
+}
+
+.table tr:hover{
+  background:#f1f5f9;
+}
+
+/* ================= HEADER ================= */
+.header{
+  background:linear-gradient(90deg,var(--primary),var(--secondary));
+  color:white;
+  padding:20px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+/* ================= SIDEBAR ================= */
+.sidebar{
+  width:240px;
+  height:100vh;
+  background:var(--dark);
+  color:white;
+  position:fixed;
+  padding:20px;
+}
+
+.sidebar a{
+  display:block;
+  color:white;
+  text-decoration:none;
+  padding:12px;
+  margin:6px 0;
+  border-radius:8px;
+}
+
+.sidebar a:hover{
+  background:var(--primary);
+}
+
+/* ================= DARK MODE ================= */
+.dark{
+  background:#0b1220;
+  color:white;
+}
+
+.dark .card{
+  background:#1e293b;
+  color:white;
+}
+
+.dark .table{
+  background:#1e293b;
+  color:white;
+}
