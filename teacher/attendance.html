@@ -120,7 +120,6 @@ td{
   <input type="text" id="search" placeholder="Search student..." onkeyup="searchStudent()">
 
 </div>
-
 <!-- ADD STUDENT -->
 <div class="add-box">
 <h3>➕ Add Student</h3>
@@ -134,19 +133,30 @@ td{
 
 <button class="btn" onclick="saveAttendance()">💾 Save Attendance</button>
 
-<!-- WEEK SUMMARY -->
 <div class="history">
 <h3>📊 Weekly Summary</h3>
-<table id="weekTable"></table>
+
+<button class="btn" onclick="toggleWeeklySummary()">
+  👁 View Weekly Summary
+</button>
+
+<table id="weekTable" style="display:none;"></table>
 </div>
 
-<!-- HISTORY -->
 <div class="history">
 <h3>📊 Attendance History</h3>
-<table id="historyTable"></table>
-</div>
 
+<button class="btn" onclick="toggleHistory()">
+  👁 View Attendance History
+</button>
+<button class="delete" onclick="clearAllHistory()">
+  🧹 Clear All History
+</button>
+
+<table id="historyTable" style="display:none;"></table>
+</div>
 <script>
+
 
 /* ================= CLASS DATA ================= */
 const classStudents = {
@@ -171,14 +181,23 @@ let students = [];
 let currentDay = localStorage.getItem("currentDay")
   ? parseInt(localStorage.getItem("currentDay"))
   : 1;
+let attendanceState = {};
 
 /* ================= LOAD CLASS ================= */
 function loadClassStudents(){
   let cls = document.getElementById("classSelect").value;
-  students = classStudents[cls] || [];
+
+  // load from localStorage first
+  let saved = localStorage.getItem("students_" + cls);
+
+  if(saved){
+    students = JSON.parse(saved);
+  }else{
+    students = classStudents[cls] || [];
+  }
+
   renderStudents();
 }
-
 /* ================= RENDER STUDENTS ================= */
 function renderStudents(){
 
@@ -194,6 +213,7 @@ function renderStudents(){
   `;
 
   students.forEach((s,i)=>{
+
     table.innerHTML += `
       <tr>
         <td>${s}</td>
@@ -201,28 +221,28 @@ function renderStudents(){
         <!-- PRESENT BOX -->
         <td>
           <div onclick="markPresent(${i})"
-               id="present-${i}"
                style="width:30px;height:30px;border:2px solid #22c55e;
                       display:flex;align-items:center;justify-content:center;
-                      cursor:pointer;border-radius:6px;font-weight:bold;">
+                      cursor:pointer;border-radius:6px;font-weight:bold;
+                      background:${attendanceState[i] === "Present" ? "#22c55e" : "transparent"};
+                      color:${attendanceState[i] === "Present" ? "white" : "black"};">
+            ${attendanceState[i] === "Present" ? "✔" : ""}
           </div>
         </td>
 
         <!-- ABSENT BOX -->
         <td>
           <div onclick="markAbsent(${i})"
-               id="absent-${i}"
                style="width:30px;height:30px;border:2px solid #ef4444;
                       display:flex;align-items:center;justify-content:center;
-                      cursor:pointer;border-radius:6px;font-weight:bold;">
+                      cursor:pointer;border-radius:6px;font-weight:bold;
+                      background:${attendanceState[i] === "Absent" ? "#ef4444" : "transparent"};
+                      color:${attendanceState[i] === "Absent" ? "white" : "black"};">
+            ${attendanceState[i] === "Absent" ? "✖" : ""}
           </div>
         </td>
 
         <td>
-          <button onclick="editStudent(${i})" style="background:#f59e0b;color:white;border:none;padding:6px 10px;border-radius:6px;">
-            ✏ Edit
-          </button>
-
           <button onclick="deleteStudent(${i})" class="delete">
             🗑 Delete
           </button>
@@ -255,6 +275,7 @@ function saveAttendance(){
       date: date,
       day: "Day " + currentDay
     });
+
   });
 
   localStorage.setItem("attendanceHistory", JSON.stringify(history));
@@ -265,12 +286,14 @@ function saveAttendance(){
   attendanceState = {}; // reset
 
   renderHistory();
+  generateWeeklySummary();
+
+  alert("Attendance Saved ✔");
 }
 /* ================= WEEK SUMMARY ================= */
 function generateWeeklySummary(){
 
   let history = JSON.parse(localStorage.getItem("attendanceHistory")) || [];
-
   let summary = {};
 
   history.forEach(h=>{
@@ -290,8 +313,11 @@ function generateWeeklySummary(){
       <th>Present</th>
       <th>Absent</th>
       <th>%</th>
+      <th>Action</th>
     </tr>
   `;
+
+  let index = 0;
 
   for(let s in summary){
 
@@ -306,54 +332,31 @@ function generateWeeklySummary(){
         <td>${p}</td>
         <td>${a}</td>
         <td>${percent}%</td>
+        <td>
+          <button class="delete" onclick="deleteWeeklyStudent('${s}')">
+            🗑 Delete
+          </button>
+        </td>
       </tr>
     `;
   }
 }
-function renderStudents(){
+function deleteWeeklyStudent(studentName){
 
-  let table = document.getElementById("studentTable");
+  let history = JSON.parse(localStorage.getItem("attendanceHistory")) || [];
 
-  table.innerHTML = `
-    <tr>
-      <th>Student</th>
-      <th>Present</th>
-      <th>Absent</th>
-      <th>Action</th>
-    </tr>
-  `;
+  // remove all records of that student
+  history = history.filter(h => h.student !== studentName);
 
-  students.forEach((s,i)=>{
+  localStorage.setItem("attendanceHistory", JSON.stringify(history));
 
-    table.innerHTML += `
-      <tr>
-        <td>${s}</td>
+  generateWeeklySummary();
+  renderHistory();
 
-        <td>
-          <div onclick="markPresent(${i})"
-               id="present-${i}"
-               style="width:35px;height:35px;border:2px solid #22c55e;
-               display:flex;align-items:center;justify-content:center;
-               cursor:pointer;border-radius:8px;font-size:20px;font-weight:bold;">
-          </div>
-        </td>
-
-        <td>
-          <div onclick="markAbsent(${i})"
-               id="absent-${i}"
-               style="width:35px;height:35px;border:2px solid #ef4444;
-               display:flex;align-items:center;justify-content:center;
-               cursor:pointer;border-radius:8px;font-size:20px;font-weight:bold;">
-          </div>
-        </td>
-
-        <td>
-          <button onclick="deleteStudent(${i})" class="delete">🗑 Delete</button>
-        </td>
-      </tr>
-    `;
-  });
+  alert("Deleted from weekly summary ✔");
 }
+
+
 // load saved students (optional improvement)
 function getStoredStudents(cls){
   return JSON.parse(localStorage.getItem("students_" + cls)) || classStudents[cls] || [];
@@ -381,20 +384,97 @@ function addStudent(){
   document.getElementById("studentName").value = "";
 }
 function markPresent(i){
-
-  document.getElementById(`present-${i}`).innerHTML = "✔";
-  document.getElementById(`absent-${i}`).innerHTML = "";
+  attendanceState[i] = "Present";
+  renderStudents();
 }
+
 function markAbsent(i){
-
-  document.getElementById(`absent-${i}`).innerHTML = "✖";
-  document.getElementById(`present-${i}`).innerHTML = "";
+  attendanceState[i] = "Absent";
+  renderStudents();
 }
-/* ================= INIT ================= */
-loadClassStudents();
-renderHistory();
-generateWeeklySummary();
 
+
+/* ================= INIT ================= */
+function renderHistory(){
+
+  let table = document.getElementById("historyTable");
+  let history = JSON.parse(localStorage.getItem("attendanceHistory")) || [];
+
+  table.innerHTML = `
+    <tr>
+      <th>Student</th>
+      <th>Status</th>
+      <th>Class</th>
+      <th>Subject</th>
+      <th>Date</th>
+      <th>Day</th>
+      <th>Action</th>
+    </tr>
+  `;
+
+  history.forEach((h,index)=>{
+    table.innerHTML += `
+      <tr>
+        <td>${h.student}</td>
+        <td>${h.status}</td>
+        <td>${h.className}</td>
+        <td>${h.subject}</td>
+        <td>${h.date}</td>
+        <td>${h.day}</td>
+        <td>
+          <button class="delete" onclick="deleteHistoryRow(${index})">
+            🗑 Delete
+          </button>
+        </td>
+      </tr>
+    `;
+  });
+}
+function deleteHistoryRow(index){
+
+  let history = JSON.parse(localStorage.getItem("attendanceHistory")) || [];
+
+  history.splice(index, 1);
+
+  localStorage.setItem("attendanceHistory", JSON.stringify(history));
+
+  renderHistory();
+  generateWeeklySummary();
+
+  alert("History deleted ✔");
+}
+function toggleWeeklySummary(){
+  let table = document.getElementById("weekTable");
+
+  if(table.style.display === "none"){
+    table.style.display = "table";
+    generateWeeklySummary();
+  } else {
+    table.style.display = "none";
+  }
+}
+function toggleHistory(){
+  let table = document.getElementById("historyTable");
+
+  if(table.style.display === "none"){
+    table.style.display = "table";
+    renderHistory();
+  } else {
+    table.style.display = "none";
+  }
+}
+function clearAllHistory(){
+
+  if(confirm("Are you sure you want to delete ALL history?")){
+
+    localStorage.removeItem("attendanceHistory");
+
+    renderHistory();
+    generateWeeklySummary();
+
+    alert("All history cleared ✔");
+  }
+}
 </script>
 
 </body>
